@@ -1,0 +1,56 @@
+div#content {
+    max-width: 60em;
+    min-width: 25em;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+}
+body {
+    background-color: #333;
+    color: #ccc;
+    font-family: 'Helvetica', Verdana, Arial, sans-serif;
+    line-height: 1.3em;
+    text-align: justify;
+}
+a {
+    color: cyan;
+    font-weight: bold;
+}
+h1 {
+    margin: 0;
+    font-family: 'Roboto Slab';
+    font-size: 2em;
+    line-height: 1em;
+    margin-bottom: 1em;
+}
+p {
+    margin-left: 3em;
+    margin-right: 3em;
+}
+ul.tags, ul.tags li {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+.codehilite pre {
+    overflow: auto;
+    font-size: 0.8em;
+    font-family: Menlo, monospace;
+    font-weight: bold;
+    padding: 0.5em;
+}
+p > img, p > a > img {
+    text-align: center;
+    max-width: 100%;
+    border: 1ex solid #222;
+}
+blockquote {
+    border-left: 1ex solid #222;
+}
+.dateline { opacity: 0.25 }
+/*
+@media min-width: 1281px { }
+@viewport {
+    width: device-width;
+}
+*/
