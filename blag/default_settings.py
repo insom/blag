@@ -5,7 +5,7 @@ class Settings(object):
     FREEZER_IGNORE_MIMETYPE_WARNINGS=True
     FREEZER_REMOVE_EXTRA_FILES=True
     DEBUG = True
-    BLAG_BASEURL='http://www.example.com/'
+    FREEZER_BASE_URL='http://www.example.com/'
     BLAG_TITLE='Untitled Blog'
     BLAG_DESCRIPTION='Undescribed Blog'
     BLAG_AUTHOR='Unknown Soldier'

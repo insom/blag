@@ -43,8 +43,8 @@ Header set Content-Type text/html
     @app.route('/rss')
     def rss():
         c = current_app.config
-        f = DefaultFeed(title=c['BLAG_TITLE'], link=c['BLAG_BASEURL'],
-            author_name=c['BLAG_AUTHOR'], feed_url='{}/rss'.format(c['BLAG_BASEURL']),
+        f = DefaultFeed(title=c['BLAG_TITLE'], link=url_for('index', _external=True),
+            author_name=c['BLAG_AUTHOR'], feed_url=url_for('rss', _external=True),
             description=c['BLAG_DESCRIPTION'], language='en')
         latest = sorted(articles, reverse=True,
                         key=lambda p: p.meta['published'])
