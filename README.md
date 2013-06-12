@@ -15,7 +15,7 @@ For previewing on http://localhost:5000/
 
 To create a static version:
 
-    $ python freeze.py
+    $ bin/blag freeze
 
 
 License

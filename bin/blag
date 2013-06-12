@@ -11,5 +11,12 @@ except ImportError:
 
 manager = Manager(create_app)
 
+@manager.command
+def freeze():
+    'Create a frozen copy of this blag'
+    from flask.ext.frozen import Freezer
+    freezer = Freezer(create_app())
+    freezer.freeze()
+
 if __name__ == '__main__':
     manager.run()
