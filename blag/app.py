@@ -19,6 +19,22 @@ def create_app(conf_obj=Settings, conf_file='/etc/blag.cfg'):
     articles = sorted(articles_, reverse=True,
                         key=lambda p: p.meta['published'])
 
+    @app.route('/.htaccess')
+    def htaccess_one():
+        return '''<Files rss>
+<IfModule mod_headers.c>
+Header set Content-Type application/rss+xml
+</IfModule>
+</Files>''', 200, {'Content-Type': 'application/octet-stream'}
+
+    @app.route('/post/.htaccess')
+    def htaccess_one():
+        return '''<Files *>
+<IfModule mod_headers.c>
+Header set Content-Type text/html
+</IfModule>
+</Files>''', 200, {'Content-Type': 'application/octet-stream'}
+
     @app.route('/pygments.css')
     def pygments_css():
         return pygments_style_defs('monokai'), 200, {'Content-Type': 'text/css'}
