@@ -2,6 +2,8 @@ class Settings(object):
     SECRET_KEY = 'CHANGEME'
     FLATPAGES_EXTENSION = '.md'
     FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite', 'headerid', 'smartypants']
+    FREEZER_IGNORE_MIMETYPE_WARNINGS=True
+    FREEZER_REMOVE_EXTRA_FILES=True
     DEBUG = True
     BLAG_BASEURL='http://www.example.com/'
     BLAG_TITLE='Untitled Blog'
