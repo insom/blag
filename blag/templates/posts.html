@@ -13,9 +13,17 @@
    </ul>
    <hr/>
 {% endfor %}
-<ul>
 {% for article in other_articles %}
-<li><a href="{{ url_for('page', path=article.path, slug=article.meta.slug) }}">{{ article.title }}</a>
+    {% if article.year != prev_year %}
+        </ul>
+    {% endif %}
+    {% if loop.first or article.year != prev_year %}
+        <h3>{{ article.year }}</h3><ul>
+    {% endif %}
+    <li><a href="{{ url_for('page', path=article.path, slug=article.meta.slug) }}">{{ article.title }}</a>
+    {% set prev_year = article.year %}
+    {% if loop.last %}
+        </ul>
+    {% endif %}
 {% endfor %}
-</ul>
 {% endblock %}

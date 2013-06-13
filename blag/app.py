@@ -60,6 +60,8 @@ Header set Content-Type text/html
     def index():
         latest = sorted(articles, reverse=True,
                         key=lambda p: p.meta['published'])
+        for article in latest:
+            article.year = article.meta['published'].split('-')[0]
         return render_template('posts.html', articles=latest[:3], other_articles=latest[3:])
 
     @app.route('/tag/<tag>/')
@@ -67,6 +69,8 @@ Header set Content-Type text/html
         articles_t = (p for p in pages if 'published' in p.meta and tag in p.meta['tags'])
         latest = sorted(articles_t, reverse=True,
                         key=lambda p: p.meta['published'])
+        for article in latest:
+            article.year = article.meta['published'].split('-')[0]
         return render_template('posts.html', articles=latest)
 
     @app.route('/post/<path:path>/')
