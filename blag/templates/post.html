@@ -1,30 +1,22 @@
 {% extends "layout.html" %}
 {% block title %}{{ article.title }}{% endblock %}
 {% block content %}
-   <h1>{{ article.title }}</h1>
-   <span class="dateline">Published: {{ nice_date }}</span>
-   <div class="body">
-{{ article }}
+  <div id="content" class="row">
+   <div class="col-md-3" style="border-right: 1px solid black; text-align: right">
+    <span class="dateline">Published: {{ article.nice_date }}</span>
    </div>
-   <ul class="tags">
-{% for tag in article.tags %}
-    <li><a href="{{ url_for('tag_', tag=tag) }}">{{ tag }}</a></li>
-{% endfor %}
-   </ul>
-   <a href="http://news.ycombinator.com/submit" class="hn-share-button">Vote on HN</a>
-   <hr/>
+   <div class="col-md-7">
+    <h1><a href="{{ url_for('page', path=article.path) }}">{{ article.title }}</a></h1>
+    <div class="body">
+{{ article }}
+    </div>
+    <hr/>
 {% if next_ %}
-   <a style="float: right" href="{{ url_for('page', path=next_.path, slug='') }}">Older: {{ next_.title }}</a>
+   <a style="float: right" href="{{ url_for('page', path=next_.path) }}">Older: {{ next_.title }}</a>
 {% endif %}
 {% if prev %}
-   <a href="{{ url_for('page', path=prev.path, slug='') }}">Newer: {{ prev.title }}</a>
+   <a href="{{ url_for('page', path=prev.path) }}">Newer: {{ prev.title }}</a>
 {% endif %}
-<script>
-    (function(d, t) {
-        var g = d.createElement(t),
-            s = d.getElementsByTagName(t)[0];
-        g.src = '//hnbutton.appspot.com/static/hn.min.js';
-        s.parentNode.insertBefore(g, s);
-    }(document, 'script'));
-</script>
 {% endblock %}
+   </div>
+  </div>

@@ -1,18 +1,22 @@
 {% extends "layout.html" %}
-{% block title %}Untitled{% endblock %}
+{% block title %}Index{% endblock %}
 {% block content %}
 {% for article in articles %}
-   <h1><a href="{{ url_for('page', path=article.path, slug=article.meta.slug) }}">{{ article.title }}</a></h1>
-   <div class="body">
-{{ article }}
+  <div id="content" class="row">
+   <div class="col-md-3" style="border-right: 1px solid black; text-align: right">
+    <span class="dateline">Published: {{ article.nice_date }}</span>
    </div>
-   <ul class="tags">
-{% for tag in article.tags %}
-    <li><a href="{{ url_for('tag_', tag=tag) }}">{{ tag }}</a></li>
+   <div class="col-md-7">
+    <h1><a href="{{ url_for('page', path=article.path) }}">{{ article.title }}</a></h1>
+    <div class="body">
+{{ article }}
+    </div>
+    <hr/>
+   </div>
+  </div>
 {% endfor %}
-   </ul>
-   <hr/>
-{% endfor %}
+  <div class="row">
+   <div class="col-md-offset-3 col-md-7">
 {% for article in other_articles %}
     {% if article.year != prev_year %}
         </ul>
@@ -20,10 +24,12 @@
     {% if loop.first or article.year != prev_year %}
         <h3>{{ article.year }}</h3><ul>
     {% endif %}
-    <li><a href="{{ url_for('page', path=article.path, slug=article.meta.slug) }}">{{ article.title }}</a>
+    <li><a href="{{ url_for('page', path=article.path) }}">{{ article.title }}</a>
     {% set prev_year = article.year %}
     {% if loop.last %}
         </ul>
     {% endif %}
 {% endfor %}
+   </div>
+  </div>
 {% endblock %}

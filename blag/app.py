@@ -21,17 +21,9 @@ def create_app(conf_obj=Settings, conf_file='/etc/blag.cfg'):
 
     @app.route('/.htaccess')
     def htaccess_one():
-        return '''<Files rss>
+        return '''<Files rss.xml>
 <IfModule mod_headers.c>
 Header set Content-Type application/rss+xml
-</IfModule>
-</Files>''', 200, {'Content-Type': 'application/octet-stream'}
-
-    @app.route('/post/.htaccess')
-    def htaccess_one():
-        return '''<Files *>
-<IfModule mod_headers.c>
-Header set Content-Type text/html
 </IfModule>
 </Files>''', 200, {'Content-Type': 'application/octet-stream'}
 
@@ -39,8 +31,7 @@ Header set Content-Type text/html
     def pygments_css():
         return pygments_style_defs('monokai'), 200, {'Content-Type': 'text/css'}
 
-    @app.route('/z/atom.xml')
-    @app.route('/rss')
+    @app.route('/rss.xml')
     def rss():
         c = current_app.config
         f = DefaultFeed(title=c['BLAG_TITLE'], link=url_for('index', _external=True),
@@ -49,8 +40,9 @@ Header set Content-Type text/html
         latest = sorted(articles, reverse=True,
                         key=lambda p: p.meta['published'])
         for late in latest[:3]:
-            f.add_item(late.meta['title'], url_for('page', path=late.path, slug=late.meta.get('slug', ''), _external=True), late.html)
-        return f.writeString('u8'), 200, {'Content-Type': 'application/rss+xml'}
+            d = datetime.strptime(late.meta['published'], '%Y-%m-%d %H:%M:%S %Z')
+            f.add_item(late.meta['title'], url_for('page', path=late.path, _external=True), late.html, unique_id=url_for('page', path=late.path, _external=True), pubdate=d)
+        return f.writeString('UTF-8'), 200, {'Content-Type': 'application/rss+xml'}
 
     @app.route('/favicon.ico')
     def favicon():
@@ -62,25 +54,17 @@ Header set Content-Type text/html
                         key=lambda p: p.meta['published'])
         for article in latest:
             article.year = article.meta['published'].split('-')[0]
+            d = datetime.strptime(article.meta['published'], '%Y-%m-%d %H:%M:%S %Z')
+            nice_date = d.strftime('%A, %d %B %Y')
+            article.nice_date = nice_date
         return render_template('posts.html', articles=latest[:3], other_articles=latest[3:])
 
-    @app.route('/tag/<tag>/')
-    def tag_(tag):
-        articles_t = (p for p in pages if 'published' in p.meta and tag in p.meta['tags'])
-        latest = sorted(articles_t, reverse=True,
-                        key=lambda p: p.meta['published'])
-        for article in latest:
-            article.year = article.meta['published'].split('-')[0]
-        return render_template('posts.html', articles=latest)
-
-    @app.route('/post/<path:path>/')
-    @app.route('/post/<path:path>/<slug>')
-    def page(path, slug=''):
+    @app.route('/post/<path:path>.html')
+    def page(path):
         page = pages.get(path)
-        if not slug and page.meta.get('slug'):
-            return redirect(url_for('page', path=path, slug=page.meta.get('slug')))
         d = datetime.strptime(page.meta['published'], '%Y-%m-%d %H:%M:%S %Z')
         nice_date = d.strftime('%A, %d %B %Y')
+        page.nice_date = nice_date
         nr = prev = next_ = None
         try:
             nr = articles.index(page)
@@ -89,6 +73,6 @@ Header set Content-Type text/html
         except:
             pass
         template = page.meta.get('template', 'post.html')
-        return render_template(template, article=page, nr=nr, next_=next_, prev=prev, nice_date=nice_date)
+        return render_template(template, article=page, nr=nr, next_=next_, prev=prev)
 
     return app

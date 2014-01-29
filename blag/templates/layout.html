@@ -1,15 +1,87 @@
 <html>
  <head>
-  <title>{% block title %}{% endblock %} - Untitled Blog</title>
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <title>{% block title %}{% endblock %} - Untitled Blag</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:1000,600,600italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  {# <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"> #}
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="{{ url_for('pygments_css') }}" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="{{ url_for('static', filename="style.css") }}" rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=Roboto Slab" rel="stylesheet" type="text/css">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss">
+  <!--[if lt IE 9]>
+  <script src="../../assets/js/html5shiv.js"></script>
+  <script src="../../assets/js/respond.min.js"></script>
+  <![endif]-->
+  <style>
+   p, h1, h2, h3, h4, h5, h6, li, body {
+    font-family: 'Open Sans', Georgia;
+    color: #4d4d4c
+   }
+   body {
+    font-size: 1.7em;
+    font-weight: 600;
+    line-height: 1.3em;
+    text-align: justify;
+   }
+   h1 {
+    font-weight: 1000;
+    text-align: left;
+    font-size: 2em;
+    margin-top: 0px;
+   }
+   #header li {
+    display: inline;
+    padding-right: 5px;
+    padding-left: 0;
+   }
+   #header ul {
+    margin: 0;
+    padding: 0;
+   }
+   .body ul li {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+   }
+   p > img, p > a > img {
+    text-align: center;
+    max-width: 100%;
+    height: auto !important;
+    border: 1ex solid #222;
+   }
+   a {
+    /*background-color: #faf700;*/
+    color: #9d4d4c;
+    line-height: 1.1em;
+   }
+  .codehilite pre {
+   overflow: auto;
+   font-size: 0.8em;
+   font-family: Menlo, monospace;
+   font-weight: bold;
+   padding: 0.5em;
+   background-color: inherit;
+   color: inherit;
+  }
+  .codehilite {
+   border-radius: 1ex;
+   opacity: 0.8;
+  }
+  </style>
  </head>
  <body>
-  <div id="content">
+  <div class="container">
+  <div id="header" class="row" style="margin-top: 2em; margin-bottom: 2em">
+  <div class="col-md-offset-3 col-md-7">
+  <h1><a href="/">Untitled Blag</a></h1>
+  <ul>
+   <li><a href="/">Home</a>
+   <li><a href="https://github.com/you">GitHub</a>
+   <li><a href="http://flickr.com/photos/you">Flickr</a>
+  </ul>
+  <p>This is a tag line.</p>
+  </div>
+  </div>
 
 {% block content %}{% endblock %}
 
